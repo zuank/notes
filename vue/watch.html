@@ -16,6 +16,7 @@
         <h3>watch状态改变</h3>
         <p>arrchange：{{watch.arr}}</p>
         <p>objchange：{{watch.obj}}</p>
+        <p>objnamechange:{{watch.objname}}</p>
         <p>stringchange：{{watch.string}}</p>
         <p>numchange：{{watch.num}}</p>
       </div>
@@ -69,7 +70,8 @@
           arr: 0,
           obj: 0,
           string: 0,
-          num: 0
+          num: 0,
+          objname: 0
         },
         arr: [{
           name: '笨笨',
@@ -88,6 +90,9 @@
       watch: {
         arr: function() {
           this.watch.arr++
+        },
+        'obj.name': function() {
+          this.watch.objname++
         },
         obj: function() {
           this.watch.obj++
