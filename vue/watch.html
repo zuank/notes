@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="vue.js" charset="utf-8"></script>
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <button type="button" @click="reset">改变arr[0]的name</button>
+      <div>
+        <h3>watch状态改变</h3>
+        <p>arrchange：{{watch.arr}}</p>
+        <p>objchange：{{watch.obj}}</p>
+        <p>stringchange：{{watch.string}}</p>
+        <p>numchange：{{watch.num}}</p>
+      </div>
+
+      <div>
+        <h3>数据展示</h3>
+        <p>arr:{{arr}}</p>
+        <p>obj:{{obj}}</p>
+        <p>string:{{string}}</p>
+        <p>num:{{num}}</p>
+      </div>
+
+      <div>
+        <h3>arr操作</h3>
+        <button type="button" @click="changeArr(0)">改变arr[0]的name</button>
+        <button type="button" @click="changeArr(1)">改变arr[0]的name($set)</button>
+        <button type="button" @click="changeArr(2)">删除arr[0]</button>
+        <button type="button" @click="changeArr(3)">删除arr[0].name</button>
+        <button type="button" @click="changeArr(4)">删除arr[0].name($delete)</button>
+        <button type="button" @click="changeArr(5)">unshift一个对象到arr</button>
+        <button type="button" @click="changeArr(6)">arr[0]重新赋值</button>
+        <button type="button" @click="changeArr(7)">arr[0]重新赋值($set)</button>
+        <button type="button" @click="changeArr(8)">arr重新赋值</button>
+        <button type="button" @click="changeArr(9)">arr重新赋值($set)</button>
+      </div>
+      <div>
+        <h3>object操作</h3>
+        <button type="button" @click="changeObj(0)">修改obj的name字段</button>
+        <button type="button" @click="changeObj(1)">修改obj的name字段($set)</button>
+        <button type="button" @click="changeObj(2)">添加age属性</button>
+        <button type="button" @click="changeObj(3)">添加age属性($set)</button>
+        <button type="button" @click="changeObj(4)">删除obj的name字段</button>
+        <button type="button" @click="changeObj(5)">删除obj的name字段($delete)</button>
+        <button type="button" @click="changeObj(6)">对obj重新赋值</button>
+      </div>
+      <div>
+        <h3>String操作</h3>
+        <button type="button" @click="changeStr">修改str字段</button>
+      </div>
+      <div>
+        <h3>Num操作</h3>
+        <button type="button" @click="changeNum">修改num字段</button>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript">
+    var app = new Vue({
+      el: "#app",
+      data: {
+        watch: {
+          arr: 0,
+          obj: 0,
+          string: 0,
+          num: 0
+        },
+        arr: [{
+          name: '笨笨',
+          address: '上海'
+        }, {
+          name: '笨笨熊',
+          address: '北京'
+        }],
+        obj: {
+          name: '呆呆',
+          address: '苏州'
+        },
+        string: "JavaScript",
+        num: 0
+      },
+      watch: {
+        arr: function() {
+          this.watch.arr++
+        },
+        obj: function() {
+          this.watch.obj++
+        },
+        string: function() {
+          this.watch.string++
+        },
+        num: function() {
+          this.watch.num++
+        }
+      },
+      methods: {
+        reset: function() {
+          this.watch = {
+            arr: 0,
+            obj: 0,
+            string: 0,
+            num: 0
+          };
+          this.arr = [{
+            name: '笨笨',
+            address: '上海'
+          }, {
+            name: '笨笨熊',
+            address: '北京'
+          }];
+          this.obj = {
+            name: '呆呆',
+            address: '苏州'
+          };
+          this.string = "JavaScript";
+          this.num = 0;
+        },
+        changeArr: function(type) {
+          switch (type) {
+            case 0:
+              this.arr[0].name = "俄罗斯"
+              break;
+            case 1:
+              this.$set(this.arr[0], 'name', '俄罗斯2')
+              break;
+            case 2:
+              this.arr.splice(0, 1)
+              break;
+            case 3:
+              delete this.arr[0].name
+              console.log(this.arr)
+              break;
+            case 4:
+              this.$delete(this.arr[0], 'name')
+              console.log(this.arr)
+              break;
+            case 5:
+              this.arr.unshift({
+                name: '呆呆',
+                address: '苏州'
+              })
+              break;
+            case 6:
+              this.arr[0] = {
+                name: '美丽',
+                address: '意大利'
+              }
+              console.log(this.arr)
+              break;
+            case 7:
+              this.$set(this.arr, 0, {
+                name: '美丽',
+                address: '意大利'
+              })
+              break;
+            case 8:
+              this.arr = [{
+                name: '泡泡',
+                address: 'llll'
+              }]
+              break;
+            case 9:
+              this.$set(this, 'arr', [{
+                name: '美丽',
+                address: '意大利'
+              }])
+              break;
+            default:
+          }
+        },
+        changeObj: function(type) {
+          switch (type) {
+            case 0:
+              this.obj.name = "帅呆呆"
+              break;
+            case 1:
+              this.$set(this.obj, 'name', '帅帅帅呆呆')
+              break;
+            case 2:
+              this.obj.age = 20
+              break;
+            case 3:
+              this.$set(this.obj, 'age', 22)
+              break;
+            case 4:
+              delete this.obj.name
+              break;
+            case 5:
+              this.$delete(this.obj, 'name')
+              break;
+            case 6:
+              this.$set(this, 'obj', {
+                name: '小贝',
+                address: '哈哈哈'
+              })
+              break;
+            default:
+
+          }
+        },
+        changeStr: function() {
+          this.string += '6'
+        },
+        changeNum: function() {
+          this.num++
+        }
+      }
+    })
+
+  </script>
+
+</html>
