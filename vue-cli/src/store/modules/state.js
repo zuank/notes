@@ -12,7 +12,6 @@ export default {
           state.arr[0].name = "俄罗斯"
           break;
         case 1:
-          console.log(vm)
           vm.set(state.arr[0], 'name', '俄罗斯2')
           break;
         case 2:
