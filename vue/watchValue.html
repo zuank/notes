@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://unpkg.com/vue" charset="utf-8"></script>
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <button type="button" @click='test'>正常watch</button>
+      <button type="button" @click='test1'>万金油watch</button>
+    </div>
+  </body>
+  <script type="text/javascript">
+    var app = new Vue({
+      el: "#app",
+      data: {
+        arr: [{
+          name: '笨笨',
+          address: '上海'
+        }, {
+          name: '笨笨熊',
+          address: '北京'
+        }],
+        obj: {
+          name: '呆呆',
+          address: '苏州'
+        },
+        str: '哈哈哈'
+      },
+      watch: {
+        arr: function(newValue, oldValue) {
+          console.log(newValue, oldValue)
+          console.log(JSON.stringify(oldValue) === JSON.stringify(newValue))
+        },
+        obj: function(newValue, oldValue) {
+          console.log(newValue, oldValue)
+          console.log(JSON.stringify(oldValue) === JSON.stringify(newValue))
+        },
+        str: function(newValue, oldValue) {
+          console.log(newValue, oldValue)
+          console.log(JSON.stringify(oldValue) === JSON.stringify(newValue))
+        },
+      },
+      methods: {
+        test() {
+          this.arr.push({
+            name: 9
+          })
+          this.$set(this.obj, 'i', 0)
+          this.str = ''
+        },
+        test1() {
+          this.arr = [{
+            name: '000'
+          }]
+          this.obj = {
+            name: 999
+          }
+          this.str = '123'
+        }
+      }
+    })
+
+  </script>
+
+</html>
